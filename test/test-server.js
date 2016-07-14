@@ -72,12 +72,12 @@ describe('Shopping List', function() {
     });
     it("should edit an item on PUT", function(done) {
         chai.request(app)
-            .put("/item/" + req.params.id)
+            .put("/item/" + res.body[0]._id)
             .send({
                 "name": "Black Beans"
             })
             .end(function(err, res) {
-                console.log(req.params.id);
+                console.log(res.body);
                 should.equal(err, null);
                 res.should.have.status(200);
                 res.should.be.equal.json;
