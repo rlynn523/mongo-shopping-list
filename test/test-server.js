@@ -72,6 +72,8 @@ describe('Shopping List', function() {
     });
     it("should edit an item on PUT", function(done) {
         chai.request(app)
+            /* To change one specific item, we need to "GET" the items in
+            the database to target the id */
             .get("/items")
             .end(function(err, res) {
                 chai.request(app)
@@ -97,19 +99,18 @@ describe('Shopping List', function() {
         chai.request(app)
             .get("/items")
             .end(function(err, res) {
+                res.body.should.have.length(4);
                 chai.request(app)
                     .delete("/items/" + res.body[2]._id)
                     .end(function(err, res) {
-                        should.equal(err, null);
-                        res.should.have.status(200);
-                        res.should.be.json;
-                        res.body.should.be.a("object");
-                        res.body.should.have.property("name");
-                        res.body.should.have.property("_id");
-                        res.body.name.should.be.a("string");
-                        res.body._id.should.be.a("string");
-                        res.body.name.should.equal("Peppers");
-                        done();
+                        chai.request(app)
+                            .get("/items")
+                            .end(function(err, res) {
+                                should.equal(err, null);
+                                res.should.have.status(200);
+                                res.body.should.have.length(3);
+                                done();
+                            });
                     });
             });
     });
