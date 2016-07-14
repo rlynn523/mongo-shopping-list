@@ -72,38 +72,45 @@ describe('Shopping List', function() {
     });
     it("should edit an item on PUT", function(done) {
         chai.request(app)
-            .put("/item/" + res.body[0]._id)
-            .send({
-                "name": "Black Beans"
-            })
+            .get("/items")
             .end(function(err, res) {
-                console.log(res.body);
-                should.equal(err, null);
-                res.should.have.status(200);
-                res.should.be.equal.json;
-                res.body.should.be.a("object");
-                res.body.should.have.property("name");
-                res.body.should.have.property("_id");
-                res.body.name.should.be.a("string");
-                res.body._id.should.be.a("string");
-                res.body.name.should.equal("Black Beans");
-                done();
+                chai.request(app)
+                    .put("/items/" + res.body[0]._id)
+                    .send({
+                        "name": "Black Beans"
+                    })
+                    .end(function(err, res) {
+                        should.equal(err, null);
+                        res.should.have.status(200);
+                        res.should.be.equal.json;
+                        res.body.should.be.a("object");
+                        res.body.should.have.property("name");
+                        res.body.should.have.property("_id");
+                        res.body.name.should.be.a("string");
+                        res.body._id.should.be.a("string");
+                        res.body.name.should.equal("Black Beans");
+                        done();
+                    });
             });
     });
     it("should delete an item on DELETE", function(done) {
         chai.request(app)
-            .delete("/items/" + 1)
+            .get("/items")
             .end(function(err, res) {
-                should.equal(err, null);
-                res.should.have.status(200);
-                res.should.be.json;
-                res.body.should.be.a("object");
-                res.body.should.have.property("name");
-                res.body.should.have.property("_id");
-                res.body.name.should.be.a("string");
-                res.body._id.should.be.a("string");
-                res.body.name.should.equal("Tomatoes");
-                done();
+                chai.request(app)
+                    .delete("/items/" + res.body[2]._id)
+                    .end(function(err, res) {
+                        should.equal(err, null);
+                        res.should.have.status(200);
+                        res.should.be.json;
+                        res.body.should.be.a("object");
+                        res.body.should.have.property("name");
+                        res.body.should.have.property("_id");
+                        res.body.name.should.be.a("string");
+                        res.body._id.should.be.a("string");
+                        res.body.name.should.equal("Peppers");
+                        done();
+                    });
             });
     });
 });
