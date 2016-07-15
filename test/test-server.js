@@ -14,18 +14,19 @@ chai.use(chaiHttp);
 describe('Shopping List', function() {
     before(function(done) {
         server.runServer(function() {
-            Item.create({
-                name: 'Broad beans'
-            }, {
-                name: 'Tomatoes'
-            }, {
-                name: 'Peppers'
-            }, function() {
-                done();
+            Item.remove(function(){
+                Item.create({
+                    name: 'Broad beans'
+                }, {
+                    name: 'Tomatoes'
+                }, {
+                    name: 'Peppers'
+                }, function() {
+                    done();
+                });
             });
         });
     });
-
     after(function(done) {
         Item.remove(function() {
             done();
