@@ -18,9 +18,9 @@ describe('Shopping List', function() {
                 Item.create({
                     name: 'Broad beans'
                 }, {
-                    name: 'Peppers'
-                }, {
                     name: 'Tomatoes'
+                }, {
+                    name: 'Peppers'
                 }, function() {
                     done();
                 });

@@ -37,8 +37,9 @@ exports.runServer = runServer;
 var Item = require('./models/item');
 
 app.get('/items', function(req, res) {
-    Item.find(function(err, items) {
+    Item.find().sort("name").exec(function(err, items) {
         if (err) {
+            console.log(err);
             return res.status(500).json({
                 message: 'Internal Server Error'
             });
